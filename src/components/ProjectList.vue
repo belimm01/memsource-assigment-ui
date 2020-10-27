@@ -5,17 +5,17 @@
       Add<b-icon icon="plus" aria-hidden="true"></b-icon>
     </b-button>
     <b-button variant="outline-info" class="mb-2"
-              v-for="(sortKey, index) in Object.keys(sortedProjects)"
+              v-for="(key, index) in projectSortKeys"
               :key="index"
-              :click="sortedProjects[sortKey]()"
-              :class="{active: sortOrder === sortKey}">
-      {{ sortKey }}
+              :click="setSortKey(key)"
+              :class="{active: sortKey === key}">
+      {{ key }}
     </b-button>
     <div v-if="projectList.length">
       <div class="sort-orders">
         <b-list-group>
           <b-list-group-item
-              v-for="(project, index) in sortedProjects[sortOrder]()"
+              v-for="(project, index) in sortedProjects"
               :key="index">
             <Project :project="project"/>
           </b-list-group-item>
@@ -32,33 +32,38 @@ import Project from './Project';
 
 const data = () => {
   return {
-    sortOrder: "id"
+    sortKey: null,
+    name: 'XC',
+    status: DELIVERED,
   }
 };
 
 const computed = {
   ...mapGetters('ProjectModule', ['projectList']),
+  projectSortKeys: function () {
+    return Object.keys(this.projectList)
+  },
+
+  sortById
+
   sortedProjects: function () {
-    console.log(this.sortOrder)
-    return {
-      "id": () => {
-        return this.projectList.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
-      },
-      "name": () => {
-        return this.projectList.slice().sort()
-      },
-      "status": () => {
-        return this.projectList;
-      },
-      "dateDue": () => {
-        return this.projectList;
-      },
-    }
+    //default 
+    if (!this.sortKey) return this.projectList
+    if (this.sortKey === "id") return sortById
+    if (this.sortKey === "name") return sortByName
+    if (sortKey === "id") return sortById
+    if (sortKey === "id") return sortById
+  }
+  filteredProjects: function () {
+    this.sortedProjects.filter(p => p.name === this.name && p.status === this.status)
   }
 };
 
 const methods = {
   ...mapActions('ProjectModule', ['updateProjectList']),
+  setSortKey(key) {
+    this.sortKey = key
+  }
 };
 
 const created = function () {
