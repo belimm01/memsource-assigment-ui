@@ -33,18 +33,18 @@ const actions = {
 
     async updateProjectList({commit, dispatch}) {
         const projects = await getProjectList();
-        await commit('setProjectList', projects.map(p => {
+        await commit('setProjectList', projects.map(project => {
             return {
-                id: p.id,
-                name: p.name,
-                status: p.status,
-                sourceLanguage: p.sourceLanguage,
-                dateDue: new Date(p.dateDue),
+                id: project.id,
+                name: project.name,
+                status: project.status,
+                sourceLanguage: project.sourceLanguage,
+                dateDue: new Date(project.dateDue),
                 targetLanguages:
-                    (typeof p.targetLanguages != 'undefined' &&
-                        p.targetLanguages instanceof Array &&
-                        p.targetLanguages?.length)
-                        ? p.targetLanguages.join(',') : ""
+                    (typeof project.targetLanguages !== 'undefined' &&
+                        project.targetLanguages instanceof Array &&
+                        project.targetLanguages?.length)
+                        ? project.targetLanguages.join(',') : ""
             }
         }));
         dispatch('updateProjectStatistics', projects)

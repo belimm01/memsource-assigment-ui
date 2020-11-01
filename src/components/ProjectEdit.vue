@@ -82,7 +82,6 @@ const methods = {
     this.project.dateDue = new Date(new Date(this.project.dateDue).toString().split('GMT')[0] + ' UTC').toISOString()
     this.project.dateUpdated = (this.project.dateUpdated) ? this.project.dateUpdated : currentDate;
     this.project.targetLanguages = getFormattedTargetLanguages(this.project);
-    console.log(this.id == null)
     if (this.id == null) {
       this.project.status = 'NEW';
       this.project.dateCreated = (this.project.dateCreated) ? this.project.dateCreated : currentDate;
@@ -91,7 +90,6 @@ const methods = {
         this.$router.push("/");
       }
     } else {
-      this.projectList.push(this.project)
       updateProject(this.project);
       this.$router.push("/");
     }
@@ -115,7 +113,6 @@ const methods = {
 
 const data = () => {
   return {
-    project: {},
     show: true
   }
 };
@@ -130,18 +127,21 @@ const props = {
 const components = {Header};
 
 const computed = {
+  project: {
+    get: function () {
+      return _.cloneDeep(this.propsProject);
+    },
+    set: function (newProject) {
+      this.$emit('propsProject', newProject)
+    }
+  },
   ...mapGetters('ProjectModule', ['projectList']),
-}
-
-const created = function () {
-  this.project = _.cloneDeep(this.propsProject)
 }
 
 const ProjectEdit = {
   methods,
   components,
   computed,
-  created,
   data,
   props,
 };

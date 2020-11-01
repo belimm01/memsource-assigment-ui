@@ -1,11 +1,5 @@
-// vue.config.js
 module.exports = {
-    configureWebpack: {
-        devServer: {
-            headers: { "Access-Control-Allow-Origin": "*" }
-        }
-    },
     devServer: {
-        host: 'localhost'
+        proxy: 'http://localhost:8090'
     }
-}
+};

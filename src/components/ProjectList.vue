@@ -5,13 +5,13 @@
     <div class="d-inline-block justify-content-center p-2">
       <router-link :to="{ name: 'create', params: {propsProject: {}} }">
         <b-button variant="outline-info"
-                  class="mb-2">
+                  class="mb-2 m-1">
           Add
           <b-icon icon="plus" aria-hidden="true"></b-icon>
         </b-button>
       </router-link>
       Sort:
-      <b-button variant="outline-info" class="mb-2"
+      <b-button variant="outline-info" class="mb-2 m-1"
                 v-for="(key, index) in projectSortKeys"
                 :key="index"
                 @click="setSortKey(key)"
@@ -72,7 +72,7 @@ const computed = {
   },
   filteredProjects: function () {
     if (!this.inputText) return this.sortedProjects
-    if (this.inputText) return this.sortedProjects.filter(obj => obj.name.includes(this.inputText) || obj.status.includes(this.inputText))
+    if (this.inputText) return this.sortedProjects.filter(obj => obj.name.toLowerCase().includes(this.inputText.toLowerCase()) || obj.status.toLowerCase().includes(this.inputText.toLowerCase()))
   }
 };
 

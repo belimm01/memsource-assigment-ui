@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const projectBaseUrl = 'http://localhost:8090/projects';
+const projectBaseUrl = '/projects';
 
 const getProjectList = async () => {
     return await axios.get(projectBaseUrl).then((response) => response.data._embedded.projects);
@@ -58,10 +58,10 @@ const mostFrequentSourceLanguage = (arr) => {
 
 const countOccurrences = (arr) => {
     let counts = {};
-    for (let i = 0; i < arr.length; i++) {
-        let status = arr[i];
-        counts[status] = counts[status] ? counts[status] + 1 : 1;
-    }
+    arr.reduce((index, status) => {
+        console.log( arr[index])
+        counts[status] = counts[status] ? counts[status] + 1 : 1
+    });
     return counts;
 }
 

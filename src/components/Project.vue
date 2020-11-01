@@ -21,7 +21,7 @@
         <div class="project-date-due">Date due: {{ project.dateDue.toLocaleString() }}</div>
       </div>
       <div class="col-auto">
-        <router-link :to="{ name: 'edit', params: {propsProject: project} }">
+        <router-link :to="{ name: 'edit', params: {propsProject: project, project: project} }">
           <b-button variant="info" class="mb-2">
             Edit
             <b-icon icon="gear-fill"></b-icon>
